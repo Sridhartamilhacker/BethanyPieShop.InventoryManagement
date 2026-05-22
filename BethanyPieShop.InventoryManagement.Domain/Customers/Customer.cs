@@ -2,9 +2,14 @@ namespace BethanyPieShop.InventoryManagement.Domain.Customers;
 
 public class Customer
 {
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } =  string.Empty;
-    public string Email { get; set; } = string.Empty;
+    public string FirstName { get; }
+    public string LastName { get; }
+    public string Email { get;}
+
+    public Customer(string firstName, string lastName) : this(firstName, lastName, "unknown@bathenypieshop.com")
+    {
+
+    }
 
     public Customer(string firstName, string lastName, string email)
     {

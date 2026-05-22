@@ -14,6 +14,11 @@ public class Order
 
     public IReadOnlyCollection<OrderLine> Lines => new ReadOnlyCollection<OrderLine>(_lines);
 
+    public Order(Customer customer, DeliveryMethod deliveryMethod) :
+        this(customer, deliveryMethod, string.Empty)
+    {
+
+    }
     public Order(Customer customer, DeliveryMethod deliveryMethod, string shippingAddress = "")
     {
         ArgumentNullException.ThrowIfNull(customer);
@@ -68,11 +73,25 @@ public class Order
         }
     }
 
+    public void ChangeToShipping()
+    {
+        DeliveryMethod = DeliveryMethod.PickUp;
+        ShippingAddress = string.Empty;
+    }
+
+    public void ChangeToShipping(string shippingAddress)
+    {
+        if (string.IsNullOrWhiteSpace(shippingAddress))
+        {
+            throw new ArgumentException("Shipping address cannot be empty.", nameof(shippingAddress));
+        }
+        DeliveryMethod = DeliveryMethod.Shipping;
+        ShippingAddress = shippingAddress;
+    }
     public decimal CalculateSubtotal()
     {
         return _lines.Sum(line => line.GetLineTotal());
     }
-
     public decimal CalculateShippingCost()
     {
         if (DeliveryMethod == DeliveryMethod.Shipping)
@@ -82,7 +101,6 @@ public class Order
 
         return 0m;
     }
-
     public decimal CalculateTotal()
     {
         return CalculateSubtotal() + CalculateShippingCost();
