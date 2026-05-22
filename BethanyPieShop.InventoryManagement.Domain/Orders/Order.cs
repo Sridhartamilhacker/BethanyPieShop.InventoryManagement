@@ -14,12 +14,12 @@ public class Order
 
     public IReadOnlyCollection<OrderLine> Lines => new ReadOnlyCollection<OrderLine>(_lines);
 
-    public Order(Customer customer, DeliveryMethod deliveryMethod) :
+    private Order(Customer customer, DeliveryMethod deliveryMethod) :
         this(customer, deliveryMethod, string.Empty)
     {
 
     }
-    public Order(Customer customer, DeliveryMethod deliveryMethod, string shippingAddress = "")
+    private Order(Customer customer, DeliveryMethod deliveryMethod, string shippingAddress = "")
     {
         ArgumentNullException.ThrowIfNull(customer);
 
@@ -33,6 +33,16 @@ public class Order
         Customer = customer;
         DeliveryMethod = deliveryMethod;
         ShippingAddress = shippingAddress;
+    }
+
+    public static Order CreatePickupOrder(Customer customer)
+    {
+        return new Order(customer, DeliveryMethod.PickUp, string.Empty);
+    }
+
+    public static Order CreateShippingOrder(Customer customer, string shippingAddress)
+    {
+        return new Order(customer, DeliveryMethod.Shipping, shippingAddress);
     }
 
     public void AddProduct(Product product, int quantity)
