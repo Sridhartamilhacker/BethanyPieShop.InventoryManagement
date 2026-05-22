@@ -6,7 +6,7 @@ public class Order
 {
     public Customer Customer { get; set; } = new();
     public List<OrderLine> Lines { get; set; } = [];
-    public string DeliveryMethod { get; set; } = "PickUp";
+    public DeliveryMethod DeliveryMethod { get; set; } = DeliveryMethod.PickUp;
     public string ShippingAddress { get; set; } = string.Empty;
 
 }

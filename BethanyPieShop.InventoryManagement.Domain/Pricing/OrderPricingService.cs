@@ -11,7 +11,7 @@ public class OrderPricingService
 
     public decimal CalculateShippingCost(Order order)
     {
-        if (order.DeliveryMethod == "Pickup")
+        if (order.DeliveryMethod == DeliveryMethod.PickUp)
         {
             return 0m;
         }
