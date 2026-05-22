@@ -4,11 +4,20 @@ namespace BethanyPieShop.InventoryManagement.Domain.Orders;
 
 public class OrderLine
 {
-    public Product Product { get; private set; }
+    public Product Product { get;}
     public int Quantity { get; private set; }
 
     public OrderLine(Product product, int quantity)
     {
+        ArgumentNullException.ThrowIfNull(product);
+        if (!product.IsActive)
+        {
+            throw new ArgumentException("Inactive products can't be added to order line", nameof(product));
+        }
+        if(quantity <= 0)
+        {
+            throw new ArgumentException("The quantiry mus be greater than zero.", nameof(quantity));
+        }
         Product = product;
         Quantity = quantity;
     }

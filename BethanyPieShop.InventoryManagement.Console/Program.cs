@@ -2,41 +2,48 @@
 using BethanyPieShop.InventoryManagement.Domain.Orders;
 using BethanyPieShop.InventoryManagement.Domain.Products;
 
-var cherryPie = new Product
+Console.WriteLine("Business request: prevent invalid objects at creation time.");
+Console.WriteLine("Scenario: constructor-based creation should block weak objects from existing.");
+Console.WriteLine();
+try
 {
-    Name = "Cherry Pie",
-    ProductCode = "CH001"
-};
-cherryPie.ChangePrice(15m);
+    var testProduct = new Product("", "", 0m);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Constructor guardrail (product): {ex.Message}");
+}
 
-var blueberryPie = new Product
+try
 {
-    Name = "Blueberry Pie",
-    ProductCode = "BL001"
-};
-blueberryPie.ChangePrice(18m);
+    var tempCustomer = new Customer("Beth", "Johnson", "beth@example.com");
+    var testOrder = new Order(tempCustomer, DeliveryMethod.Shipping);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Constructor guardrail (order): {ex.Message}");
+}
 
-var customer = new Customer
+try
 {
-    FirstName = "Beth",
-    LastName = "Johnson"
-};
+    var tempProduct = new Product("AP001", "Apple Pie", 12m);
+    var testOrderLine = new OrderLine(tempProduct, 0);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Constructor guardrail (order line): {ex.Message}");
+}
 
-var order = new Order
-{
-    Customer = customer,
-    DeliveryMethod = DeliveryMethod.Shipping,
-    ShippingAddress = "Main Street 1"
-};
+Console.WriteLine();
+
+var cherryPie = new Product("CH001", "Cherry Pie", 15m);
+var blueberryPie = new Product("BL001", "Blueberry Pie", 18m);
+var customer = new Customer("Beth", "Johnson", "beth@example.com");
+var order = new Order(customer, DeliveryMethod.Shipping, "Main Street 1");
 
 order.AddProduct(cherryPie, 2);
 order.AddProduct(blueberryPie, 1);
-order.AddProduct(cherryPie, 1);
 
-Console.WriteLine($"Subtotal: {order.CalculateSubtotal():C}");
-Console.WriteLine($"Shipping: {order.CalculateShippingCost():C}");
+Console.WriteLine($"Customer: {order.Customer.GetFullName()}");
+Console.WriteLine($"Line count: {order.Lines.Count}");
 Console.WriteLine($"Total: {order.CalculateTotal():C}");
-
-order.RemoveProduct("BL001");
-
-Console.WriteLine($"Updated total: {order.CalculateTotal():C}");
