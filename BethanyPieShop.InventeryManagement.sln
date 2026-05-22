@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanyPieShop.InventoryManagement.Console", "BethanyPieShop.InventoryManagement.Console\BethanyPieShop.InventoryManagement.Console.csproj", "{706778BE-BC39-4C7E-B468-C45B3B57D803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BethanyPieShop.InventoryManagement.Domain", "BethanyPieShop.InventoryManagement.Domain\BethanyPieShop.InventoryManagement.Domain.csproj", "{8E18DB84-B82F-4F70-9545-F998EB4618FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{706778BE-BC39-4C7E-B468-C45B3B57D803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{706778BE-BC39-4C7E-B468-C45B3B57D803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{706778BE-BC39-4C7E-B468-C45B3B57D803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{706778BE-BC39-4C7E-B468-C45B3B57D803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E18DB84-B82F-4F70-9545-F998EB4618FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E18DB84-B82F-4F70-9545-F998EB4618FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E18DB84-B82F-4F70-9545-F998EB4618FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E18DB84-B82F-4F70-9545-F998EB4618FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
