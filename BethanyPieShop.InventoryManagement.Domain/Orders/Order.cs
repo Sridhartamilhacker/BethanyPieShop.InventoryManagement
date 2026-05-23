@@ -8,22 +8,22 @@ public class Order
 {
     private readonly List<OrderLine> _lines = [];
     public Customer Customer { get; }
-    public DeliveryDetails DeliveryDetails { get; }
+    public Delivery Delivery { get; }
     public IReadOnlyCollection<OrderLine> Lines => new ReadOnlyCollection<OrderLine>(_lines);
-    private Order(Customer customer, DeliveryDetails deliveryDetails)
+    private Order(Customer customer, Delivery delivery)
     {
         Customer = customer ??  throw new ArgumentNullException(nameof(customer));
-        DeliveryDetails = deliveryDetails ?? throw new ArgumentNullException(nameof(deliveryDetails));
+        Delivery = delivery ?? throw new ArgumentNullException(nameof(delivery));
     }
 
     public static Order CreatePickupOrder(Customer customer)
     {
-        return new Order(customer, DeliveryDetails.CreateForPickup());
+        return new Order(customer, Delivery.ForPickup());
     }
 
     public static Order CreateShippingOrder(Customer customer, string shippingAddress)
     {
-        return new Order(customer, DeliveryDetails.CreateForShipping(shippingAddress));
+        return new Order(customer, Delivery.ForShipping(shippingAddress));
     }
 
     public void AddProduct(Product product, int quantity)
@@ -79,11 +79,11 @@ public class Order
     }
     public void ChangeToPickup()
     {
-        DeliveryDetails.ChangeToPickup();
+        Delivery.ForPickup();
     }
     public void ChangeToShipping(string shippingAddress)
     {
-        DeliveryDetails.ChangeToShipping(shippingAddress);
+        Delivery.ForShipping(shippingAddress);
     }
     public decimal CalculateSubtotal()
     {
@@ -91,6 +91,6 @@ public class Order
     }
     public decimal CalculateTotal()
     {
-        return CalculateSubtotal() + DeliveryDetails.CalculateShippingCost();
+        return CalculateSubtotal() + Delivery.CalculateShippingCost();
     }
 }
