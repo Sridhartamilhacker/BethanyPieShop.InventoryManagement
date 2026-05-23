@@ -2,18 +2,23 @@
 using BethanyPieShop.InventoryManagement.Domain.Orders;
 using BethanyPieShop.InventoryManagement.Domain.Products;
 
-var guestCustomer = new Customer("Sam", "Taylor");
-var pickupOrder = Order.CreatePickupOrder(guestCustomer);
-
-Console.WriteLine("Overload example:");
-Console.WriteLine($"Guest customer email fallback: {guestCustomer.Email}");
-Console.WriteLine($"Pickup order delivery method: {pickupOrder.DeliveryMethod}");
-Console.WriteLine("Observation: overloaded constructors can support different valid scenarios while delegating to one validation path.");
-Console.WriteLine();
-
 var customer = new Customer("Beth", "Johnson", "beth@example.com");
 var cherryPie = new Product("CH001", "Cherry Pie", 15m);
-var order = Order.CreateShippingOrder(customer, "Main Street 1");
 
+var order = Order.CreateShippingOrder(customer, "Main Street 1");
 order.AddProduct(cherryPie, 2);
-Console.WriteLine($"Shipping order total: {order.CalculateTotal():C}");
+
+Console.WriteLine("One-to-one composition example:");
+Console.WriteLine($"Customer: {order.Customer.GetFullName()}");
+Console.WriteLine($"Delivery method: {order.DeliveryDetails.DeliveryMethod}");
+Console.WriteLine($"Shipping address: {order.DeliveryDetails.ShippingAddress}");
+Console.WriteLine($"Shipping cost: {order.DeliveryDetails.CalculateShippingCost()}");
+Console.WriteLine($"Order total: {order.CalculateTotal()}");
+Console.WriteLine();
+
+order.ChangeToPickup();
+
+Console.WriteLine("After changing delivery through the order:");
+Console.WriteLine($"Delivery method: {order.DeliveryDetails.DeliveryMethod}");
+Console.WriteLine($"Shipping address: '{order.DeliveryDetails.ShippingAddress}'");
+Console.WriteLine($"Order total: {order.CalculateTotal()}");

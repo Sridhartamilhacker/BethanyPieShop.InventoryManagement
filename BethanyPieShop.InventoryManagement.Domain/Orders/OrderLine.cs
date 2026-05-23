@@ -7,7 +7,7 @@ public class OrderLine
     public Product Product { get;}
     public int Quantity { get; private set; }
 
-    public OrderLine(Product product, int quantity)
+    internal OrderLine(Product product, int quantity)
     {
         ArgumentNullException.ThrowIfNull(product);
         if (!product.IsActive)
@@ -22,12 +22,12 @@ public class OrderLine
         Quantity = quantity;
     }
 
-    public decimal GetLineTotal()
+    internal decimal GetLineTotal()
     {
         return Product.UnitPrice * Quantity;
     }
 
-    public void IncreaseQuantity(int quantity)
+    internal void IncreaseQuantity(int quantity)
     {
         if (quantity <= 0)
         {
@@ -36,7 +36,7 @@ public class OrderLine
         Quantity += quantity;
     }
 
-    public void ChangeQuantity(int quantity)
+    internal void ChangeQuantity(int quantity)
     {
         if (quantity <= 0)
         {
@@ -44,4 +44,5 @@ public class OrderLine
         }
         Quantity = quantity;
     }
+
 }
