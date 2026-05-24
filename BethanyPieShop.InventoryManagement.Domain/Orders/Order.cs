@@ -2,6 +2,7 @@ using BethanyPieShop.InventoryManagement.Domain.Customers;
 using BethanyPieShop.InventoryManagement.Domain.Products;
 using System.Collections.ObjectModel;
 using BethanyPieShop.InventoryManagement.Domain.Pricing;
+using BethanyPieShop.InventoryManagement.Domain.Values;
 
 namespace BethanyPieShop.InventoryManagement.Domain.Orders;
 
@@ -22,7 +23,7 @@ public class Order
         return new Order(customer, Delivery.ForPickup());
     }
 
-    public static Order CreateShippingOrder(Customer customer, string shippingAddress)
+    public static Order CreateShippingOrder(Customer customer, ShippingAddress shippingAddress)
     {
         return new Order(customer, Delivery.ForShipping(shippingAddress));
     }
@@ -82,20 +83,21 @@ public class Order
     {
         Delivery.ForPickup();
     }
-    public void ChangeToShipping(string shippingAddress)
+    public void ChangeToShipping(ShippingAddress shippingAddress)
     {
         Delivery.ForShipping(shippingAddress);
     }
-    public decimal CalculateSubtotal()
+    public Money CalculateSubtotal()
     {
-        return _lines.Sum(line => line.GetLineTotal());
+        return _lines.Select( line => line.GetLineTotal()).
+            Aggregate(new Money(0),(current,next) => current + next);
     }
-    public decimal CalculateTotal()
+    public Money CalculateTotal()
     {
         return CalculateSubtotal() + Delivery.CalculateShippingCost();
     }
 
-    public decimal CalculateTotal(IDiscountPolicy discountPolicy)
+    public Money CalculateTotal(IDiscountPolicy discountPolicy)
     {
         ArgumentNullException.ThrowIfNull(discountPolicy);
         var totalBeforeDiscount = CalculateTotal();

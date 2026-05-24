@@ -1,4 +1,5 @@
 using BethanyPieShop.InventoryManagement.Domain.Products;
+using BethanyPieShop.InventoryManagement.Domain.Values;
 
 namespace BethanyPieShop.InventoryManagement.Domain.Orders;
 
@@ -22,9 +23,9 @@ public class OrderLine
         Quantity = quantity;
     }
 
-    internal decimal GetLineTotal()
+    internal Money GetLineTotal()
     {
-        return Product.UnitPrice * Quantity;
+        return new Money(Product.UnitPrice.Amount * Quantity);
     }
 
     internal void IncreaseQuantity(int quantity)

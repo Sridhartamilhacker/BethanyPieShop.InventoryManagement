@@ -1,7 +1,9 @@
+using BethanyPieShop.InventoryManagement.Domain.Values;
+
 namespace BethanyPieShop.InventoryManagement.Domain.Pricing;
 
 public interface IDiscountPolicy
 {
-    decimal ApplyDiscount(decimal totalPrice);
+    Money ApplyDiscount(Money totalPrice);
 
 }

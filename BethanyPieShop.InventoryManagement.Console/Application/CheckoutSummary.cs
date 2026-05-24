@@ -1,10 +1,12 @@
+using BethanyPieShop.InventoryManagement.Domain.Values;
+
 namespace BethanyPieShop.InventoryManagement.Application;
 
 public sealed record CheckoutSummary(
     string CustomerName,
     string DeliveryType,
-    decimal Subtotal,
-    decimal ShippingCost,
-    decimal TotalBeforeDiscount,
-    decimal TotalAfterDiscount
+    Money Subtotal,
+    Money ShippingCost,
+    Money TotalBeforeDiscount,
+    Money TotalAfterDiscount
 );

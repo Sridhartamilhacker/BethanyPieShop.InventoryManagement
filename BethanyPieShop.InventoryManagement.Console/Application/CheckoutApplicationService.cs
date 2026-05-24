@@ -2,6 +2,7 @@ using BethanyPieShop.InventoryManagement.Domain.Customers;
 using BethanyPieShop.InventoryManagement.Domain.Orders;
 using BethanyPieShop.InventoryManagement.Domain.Pricing;
 using BethanyPieShop.InventoryManagement.Domain.Products;
+using BethanyPieShop.InventoryManagement.Domain.Values;
 
 namespace BethanyPieShop.InventoryManagement.Application;
 
@@ -16,7 +17,7 @@ public class CheckoutApplicationService
 
     public CheckoutSummary CheckoutShipping(
         Customer customer,
-        string shippingAddress,
+        ShippingAddress shippingAddress ,
         IEnumerable<CheckoutLineRequest> lines,
         IDiscountPolicy? discountPolicy = null)
     {

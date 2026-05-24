@@ -1,17 +1,14 @@
+using BethanyPieShop.InventoryManagement.Domain.Values;
+
 namespace BethanyPieShop.InventoryManagement.Domain.Customers;
 
 public class Customer
 {
     public string FirstName { get; }
     public string LastName { get; }
-    public string Email { get;}
+    public EmailAddress Email { get; }
 
-    public Customer(string firstName, string lastName) : this(firstName, lastName, "unknown@bathenypieshop.com")
-    {
-
-    }
-
-    public Customer(string firstName, string lastName, string email)
+    public Customer(string firstName, string lastName, EmailAddress email)
     {
         if (string.IsNullOrWhiteSpace(firstName))
         {
@@ -20,10 +17,6 @@ public class Customer
         if (string.IsNullOrWhiteSpace(lastName))
         {
             throw new ArgumentException("the last name is required",nameof(lastName));
-        }
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            throw new ArgumentException("The email is required", nameof(email));
         }
         FirstName = firstName;
         LastName = lastName;

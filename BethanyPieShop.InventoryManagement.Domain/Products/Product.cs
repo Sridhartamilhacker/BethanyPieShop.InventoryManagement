@@ -1,13 +1,15 @@
+using BethanyPieShop.InventoryManagement.Domain.Values;
+
 namespace BethanyPieShop.InventoryManagement.Domain.Products;
 
 public class Product
 {
     public string Name { get; set; } = string.Empty;
     public string ProductCode { get; set; } = string.Empty;
-    public decimal UnitPrice { get; private set; }
+    public Money UnitPrice { get; private set; }
     public bool IsActive { get; private set; }
 
-    public Product(string productCode, string name, decimal unitPrice)
+    public Product(string productCode, string name, Money unitPrice)
     {
         if (string.IsNullOrWhiteSpace(productCode))
         {
@@ -17,24 +19,16 @@ public class Product
         {
             throw new ArgumentException("A Product name is required", nameof(name));
         }
-        if(unitPrice <= 0)
-        {
-            throw new ArgumentException("The product price must be greater than zero", nameof(unitPrice));
-        }
         ProductCode = productCode;
         Name = name;
-        UnitPrice = unitPrice;
+        UnitPrice = unitPrice ?? throw new ArgumentNullException(nameof(unitPrice));
         IsActive = true;
         
     }
 
     public void ChangePrice(decimal newPrice)
     {
-        if(newPrice <= 0)
-        {
-            throw new ArgumentException("A product price must be greater than zero.");
-        }
-        UnitPrice = newPrice;
+        UnitPrice = new Money(newPrice);
     }
 
     public void Deactivate()
