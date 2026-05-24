@@ -1,6 +1,7 @@
 using BethanyPieShop.InventoryManagement.Domain.Customers;
 using BethanyPieShop.InventoryManagement.Domain.Products;
 using System.Collections.ObjectModel;
+using BethanyPieShop.InventoryManagement.Domain.Pricing;
 
 namespace BethanyPieShop.InventoryManagement.Domain.Orders;
 
@@ -92,5 +93,12 @@ public class Order
     public decimal CalculateTotal()
     {
         return CalculateSubtotal() + Delivery.CalculateShippingCost();
+    }
+
+    public decimal CalculateTotal(IDiscountPolicy discountPolicy)
+    {
+        ArgumentNullException.ThrowIfNull(discountPolicy);
+        var totalBeforeDiscount = CalculateTotal();
+        return discountPolicy.ApplyDiscount(totalBeforeDiscount);
     }
 }
