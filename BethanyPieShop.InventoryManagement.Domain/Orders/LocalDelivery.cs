@@ -2,18 +2,18 @@ using BethanyPieShop.InventoryManagement.Domain.Values;
 
 namespace BethanyPieShop.InventoryManagement.Domain.Orders;
 
-public class ShippingDelivery : Delivery
+public sealed class LocalDelivery : Delivery
 {
     public ShippingAddress ShippingAddress { get; }
     public override string DisplayName => "Shipping";
 
-    public  ShippingDelivery(ShippingAddress shippingAddress)
+    public  LocalDelivery(ShippingAddress shippingAddress)
     {
         ShippingAddress = shippingAddress ??  throw new ArgumentNullException(nameof(shippingAddress));
     }
 
     public override Money CalculateShippingCost(Money subTotal)
     {
-        return subTotal.Amount >= 50m ? new Money(0m) : new Money(5m);
+        return subTotal.Amount >= 50m ? new Money(0m) : new Money(2.5m);
     }
 }

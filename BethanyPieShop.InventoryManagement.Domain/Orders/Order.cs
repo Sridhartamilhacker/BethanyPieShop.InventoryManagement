@@ -87,6 +87,16 @@ public class Order
     {
         Delivery.ForShipping(shippingAddress);
     }
+    public void ChangeToDelivery(ShippingAddress shippingAddress)
+    {
+        Delivery.ForLocalDelivery(shippingAddress);
+    }
+
+    public Money CalculateShippingCost()
+    {
+        var subTotal = CalculateSubtotal();
+        return Delivery.CalculateShippingCost(subTotal);
+    }
     public Money CalculateSubtotal()
     {
         return _lines.Select( line => line.GetLineTotal()).
@@ -94,9 +104,8 @@ public class Order
     }
     public Money CalculateTotal()
     {
-        return CalculateSubtotal() + Delivery.CalculateShippingCost();
+        return CalculateSubtotal() + CalculateShippingCost();
     }
-
     public Money CalculateTotal(IDiscountPolicy discountPolicy)
     {
         ArgumentNullException.ThrowIfNull(discountPolicy);

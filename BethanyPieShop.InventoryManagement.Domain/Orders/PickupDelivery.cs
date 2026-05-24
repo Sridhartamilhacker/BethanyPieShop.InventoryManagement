@@ -6,7 +6,7 @@ public class PickupDelivery : Delivery
 {
     public override string DisplayName => "Pickup";
 
-    public override Money CalculateShippingCost()
+    public override Money CalculateShippingCost(Money subTotal)
     {
         return new Money(0m);
     }
